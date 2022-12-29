@@ -6,70 +6,81 @@ using System.Threading.Tasks;
 
 namespace BinarySearchTree_051
 {
-    class Node
+
+    /*A node class consi
+     * 
+     */
+
+    class node
     {
         public string info;
-        public Node leftchild;
-        public Node rightchild;
+        public node lchild;
+        public node rchild;
 
-        //Constructor for the NOde Class
-        public Node(string i, Node l, Node r)
+        //constructor for the node class
+
+        public node(string i, node l, node r)
         {
             info = i;
-            leftchild = l;
-            rightchild = r;
+            lchild = l;
+            rchild = r;
         }
     }
-    /* A node class consist of three things, the information, references to the right child, and references to the left child. */
+
+
 
     class BinaryTree
     {
-        public Node ROOT;
+        public node ROOT;
+
         public BinaryTree()
         {
-            ROOT = null; //initializing ROOT to null
+            ROOT = null; // initializing root to null
         }
-        public void insert(string element) //Insert a node in the binary sesarch tree
+
+        public void insert(string element)//insert a node in the binary
         {
-            Node tmp, parent = null, currentNode = null;
-            search(element, ref parent, ref currentNode);
-            if (currentNode != null) // check if the node to be inserted already inserted or not
+            node tmp, parent = null, currentnode = null;
+            find(element, ref parent, ref currentnode);
+            if (currentnode != null) //
             {
                 Console.WriteLine("Duplicate words not allowed");
                 return;
             }
-            else // if the specified node is not present 
+            else //if the specified node is not present
             {
-                tmp = new Node(element, null, null); //creates a Node
-                if (parent == null) //if the trees is empty
+                tmp = new node(element, null, null);
+                if (parent == null)
                 {
                     ROOT = tmp;
                 }
                 else if (string.Compare(element, parent.info) < 0)
                 {
-                    parent.leftchild = tmp;
+                    if (string.Compare(element, parent.info) < 0)
+                        parent.lchild = tmp;
                 }
                 else
                 {
-                    parent.rightchild = tmp;
+                    parent.rchild = tmp;
                 }
             }
         }
-        public void search(string element, ref Node parent, ref Node currentNode)
+
+        public void find(string element, ref node parent, ref node currentnode)
         {
-            //This function searchs the currentNode of the specified Node as well as the current Node of parent
-            currentNode = ROOT;
+
+            currentnode = ROOT;
             parent = null;
-            while ((currentNode != null) && (currentNode.info != element))
+            while ((currentnode != null) && (currentnode.info != element))
             {
-                parent = currentNode;
-                if (string.Compare(element, currentNode.info) < 0)
-                    currentNode = currentNode.leftchild;
+                parent = currentnode;
+                if (string.Compare(element, currentnode.info) < 0)
+                    currentnode = currentnode.lchild;
                 else
-                    currentNode = currentNode.rightchild;
+                    currentnode = currentnode.rchild;
             }
         }
-        public void inorder(Node ptr)
+        public void inorder(node ptr)
         {
             if (ROOT == null)
             {
@@ -78,44 +89,95 @@ namespace BinarySearchTree_051
             }
             if (ptr != null)
             {
-                inorder(ptr.leftchild);
-                Console.Write(ptr.info + " ");
-                inorder(ptr.rightchild);
+                inorder(ptr.lchild);
+                Console.WriteLine(ptr.info + "");
+                inorder(ptr.rchild);
             }
         }
-        public void preorder(Node ptr)
+
+
+        public void preorder(node ptr)
+        {
+            if (ROOT == null)
+            {
+                Console.WriteLine("Tree is empty");
+                return;
+            }
+            if (ptr != null)
+            {
+                Console.WriteLine(ptr.info + "");
+                preorder(ptr.lchild);
+                preorder(ptr.rchild);
+            }
+        }
+        public void postorder(node ptr)
         {
             if (ROOT == null)
             {
                 Console.WriteLine("Tree is Empty");
                 return;
+
             }
             if (ptr != null)
             {
-                Console.WriteLine(ptr.info + " ");
-                preorder(ptr.leftchild);
-                preorder(ptr.rightchild);
-            }
-        }
-        public void postorder(Node ptr) // performs the postorder traversal of the tree
-        {
-            if (ROOT == null)
-            {
-                Console.WriteLine("Tree is empty");
-                return;
-            }
-            if (ptr != null)
-            {
-                postorder(ptr.leftchild);
-                postorder(ptr.rightchild);
-                Console.WriteLine(ptr.info + " ");
+                postorder(ptr.lchild);
+                postorder(ptr.rchild);
+                Console.Write(ptr.info + "");
             }
         }
     }
-    internal class Program
+
+
+
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
+        BinaryTree x = new BinaryTree();
+        while (true)
         {
+            Console.WriteLine("\nMenu");
+            Console.WriteLine("1. Implement insert operation");
+            Console.WriteLine("2. Perform inorder traversal");
+            Console.WriteLine("3. Perform preorder traversal");
+            Console.WriteLine("4. Perform postorder traversal");
+            Console.WriteLine("5. Exit");
+            Console.Write("\nEnter your choice (1-5) :");
+            char ch = Convert.ToChar(Console.ReadLine());
+            Console.WriteLine();
+            switch (ch)
+            {
+                case '1':
+                    {
+                        Console.WriteLine("enter a word: ");
+                        string word = Console.ReadLine();
+                        x.insert(word);
+                    }
+                    break;
+                case '2':
+                    {
+                        x.inorder(x.ROOT);
+                    }
+                    break;
+                case '3':
+                    {
+                        x.preorder(x.ROOT);
+                    }
+                    break;
+                case '4':
+                    {
+                        x.postorder(x.ROOT);
+                    }
+                    break;
+                case '5':
+                    return;
+                default:
+                    {
+                        Console.WriteLine("invalid option");
+                        break;
+                    }
+
+            }
         }
+
     }
 }
+
