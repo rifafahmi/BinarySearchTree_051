@@ -21,5 +21,12 @@ namespace BinarySearchTree_128
                 rchild = r;
             }
         }
-        
-    }
+        class BinaryTree
+        {
+            public node ROOT;
+            public BinaryTree()
+            {
+                ROOT = null; // intializing root to null
+            }
+
+        }
