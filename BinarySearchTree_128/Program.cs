@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BinarySearchTree_128
+namespace BinarySearchTree_051
 {
     class Program
     {
@@ -38,3 +38,7 @@ namespace BinarySearchTree_128
                     return;
                 }
             }
+        }
+    }
+}
+
