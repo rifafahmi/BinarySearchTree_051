@@ -6,62 +6,66 @@ using System.Threading.Tasks;
 
 namespace BinarySearchTree_051
 {
-
-    /*A node class consi
-     * 
-     */
-
-    class node
+    class Node
     {
         public string info;
-        public node lchild;
-        public node rchild;
+        public Node leftchild;
+        public Node rightchild;
 
-        //constructor for the node class
-
-        public node(string i, node l, node r)
+        //Constructor for the NOde Class
+        public Node(string i, Node l, Node r)
         {
             info = i;
-            lchild = l;
-            rchild = r;
+            leftchild = l;
+            rightchild = r;
         }
     }
-
-
+    /* A node class consist of three things, the information, references to the right child, and references to the left child. */
 
     class BinaryTree
     {
-        public node ROOT;
-
+        public Node ROOT;
         public BinaryTree()
         {
-            ROOT = null; // initializing root to null
+            ROOT = null; //initializing ROOT to null
         }
-
-        public void insert(string element)//insert a node in the binary
+        public void insert(string element) //Insert a node in the binary sesarch tree
         {
-            node tmp, parent = null, currentnode = null;
-            find(element, ref parent, ref currentnode);
-            if (currentnode != null) //
+            Node tmp, parent = null, currentNode = null;
+            search(element, ref parent, ref currentNode);
+            if (currentNode != null) // check if the node to be inserted already inserted or not
             {
                 Console.WriteLine("Duplicate words not allowed");
                 return;
             }
-            else //if the specified node is not present
+            else // if the specified node is not present 
             {
-                tmp = new node(element, null, null);
-                if (parent == null)
+                tmp = new Node(element, null, null); //creates a Node
+                if (parent == null) //if the trees is empty
                 {
                     ROOT = tmp;
                 }
                 else if (string.Compare(element, parent.info) < 0)
                 {
-                    if (string.Compare(element, parent.info) < 0)
-                        parent.lchild = tmp;
+                    parent.leftchild = tmp;
                 }
                 else
                 {
-                    parent.rchild = tmp;
+                    parent.rightchild = tmp;
                 }
+            }
+        }
+        public void search(string element, ref Node parent, ref Node currentNode)
+        {
+            //This function searchs the currentNode of the specified Node as well as the current Node of parent
+            currentNode = ROOT;
+            parent = null;
+            while ((currentNode != null) && (currentNode.info != element))
+            {
+                parent = currentNode;
+                if (string.Compare(element, currentNode.info) < 0)
+                    currentNode = currentNode.leftchild;
+                else
+                    currentNode = currentNode.rightchild;
             }
         }
